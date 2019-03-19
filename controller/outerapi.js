@@ -10,6 +10,11 @@ exports.signout = async (ctx,name)=>{
 	ctx.body = '退出登录'
 }
 exports.register = async (ctx,name)=>{
+	console.log(ctx.request.body)
+	ctx.body = {
+	    title: '注册'
+	  }
+	return
 	const data = await User.find({name:"狗狗"});
 	console.log(data.length)
 	ctx.body = data.length
