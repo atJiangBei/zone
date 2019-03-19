@@ -1,0 +1,7 @@
+  <-- GET /
+GET / - 401ms
+  --> GET / 200 425ms 185b
+  <-- GET /stylesheets/style.css
+  --> GET /stylesheets/style.css 200 18ms 111b
+  <-- GET /stylesheets/style.css
+  --> GET /stylesheets/style.css 200 3ms 111b
