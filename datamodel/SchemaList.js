@@ -10,4 +10,4 @@ const userSchema = new Schema({
 });
 
 
-exports.User = userSchema;
+exports.userSchema = userSchema;
