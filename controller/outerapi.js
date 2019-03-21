@@ -20,7 +20,7 @@ exports.signin = async (ctx,next)=>{
 	  		ctx.session.name = name;
 			ctx.session.password = password;
     	}else{
-    		ctx.body = {state:1,message:"密码错误"}
+    		ctx.body = {state:2,message:"密码错误"}
     	}
     	
     }
@@ -73,4 +73,22 @@ exports.retrievepassword = async (ctx,next)=>{
 	ctx.body = {
 	        title: '找回密码',
 	      }
+}
+
+exports.loginStatus = async (ctx,next)=>{
+	const session = ctx.session;
+	let data = null;
+	if(session.name){
+	   data = await User.findOne({name:session.name},{name: 1, _id: 1, CreatedDate: 1});
+	   ctx.body = {
+	   	state:1,
+	   	data:data
+	   }
+	}else{
+		ctx.body = {
+			state:2,
+			message:"登录状态已过期，请重新登录"
+		}
+	}
+	
 }
