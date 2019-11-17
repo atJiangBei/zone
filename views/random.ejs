@@ -288,6 +288,11 @@
 		</section>
 		<div id="loading"></div>
 		<script>
+			window.onload = function(){
+			var password = prompt("请输入密码");
+			if(password !== '20132014'){
+				return
+			}
 			var loaddom = document.getElementById("loading");
 
 			function ajax(options) {
@@ -330,8 +335,6 @@
 				}
 				return
 			}
-		</script>
-		<script>
 			var dataNames = [];
 			var status = 'pending';
 			var startBtn = document.getElementById("startBtn");
@@ -450,6 +453,7 @@
 					target.classList.add('active');
 				}
 			}
+}
 		</script>
 	</body>
 </html>
