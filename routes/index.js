@@ -1,13 +1,65 @@
 const router = require('koa-router')()
-
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
+const fs = require('fs')
+const path = require('path')
+router.get('/random', async (ctx, next) => {
+	
+  await ctx.render('random', {
     title: 'Hello Koa 2!'
   })
 })
 
-router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
+router.get('/queryRandomName', async (ctx, next) => {
+	var names = require('./../data/random/names.json')
+	ctx.body = names
+})
+
+router.get('/addRandomName', async (ctx, next) => {
+	var names = require('./../data/random/names.json')
+	console.log(typeof names)
+	const {name} = ctx.query;
+	names.push({
+		name:name
+	})
+	try{
+		fs.writeFileSync(path.join(__dirname, '../data/random/names.json'),JSON.stringify(names));
+		var names = require('./../data/random/names.json')
+		ctx.body = {
+		  status: 1,
+			data:names
+		}
+	}catch(e){
+		ctx.body = {
+		  status: 1,
+			data:[],
+			err:e
+		}
+	}
+})
+
+router.get('/deleteRandomName', async (ctx, next) => {
+	var names = require('./../data/random/names.json')
+	const {name} = ctx.query;
+	var length = names.length
+	for(var i=0;i<length;i++){
+		if(names[i].name === name){
+			names.splice(i,1)
+			length--
+		}
+	}
+	try{
+		fs.writeFileSync(path.join(__dirname, '../data/random/names.json'),JSON.stringify(names));
+		var names = require('./../data/random/names.json')
+		ctx.body = {
+		  status: 1,
+			data:names
+		}
+	}catch(e){
+		ctx.body = {
+		  status: 1,
+			data:[],
+			err:e
+		}
+	}
 })
 
 router.get('/json', async (ctx, next) => {

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>随机点名</title>
+		<link rel="icon" href="images/book-logo.png" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				text-align: center;
+				font-weight: 100;
+				outline: none;
+				border: none;
+			}
+
+			.clear:after {
+				content: '';
+				display: block;
+				visibility: hidden;
+				overflow: hidden;
+				clear: both;
+			}
+
+			.blank {
+				height: 20px;
+			}
+
+			html,
+			body {
+				height: 100%;
+			}
+
+			/* html {
+				background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjAwMHB4IiBoZWlnaHQ9IjcwMHB4IiB2aWV3Qm94PSIwIDAgMjAwMCA3MDAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU0LjEgKDc2NDkwKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5SZWN0YW5nbGUgMTQ8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz4KICAgICAgICA8cmFkaWFsR3JhZGllbnQgY3g9IjMyLjI4MzY3MDYlIiBjeT0iNDIuMTM0OTg4JSIgZng9IjMyLjI4MzY3MDYlIiBmeT0iNDIuMTM0OTg4JSIgcj0iNDYuNTEzMDMzJSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgwLjMyMjgzNywwLjQyMTM1MCksc2NhbGUoMC4zNTAwMDAsMS4wMDAwMDApLHJvdGF0ZSg5MC4wMDAwMDApLHNjYWxlKDEuMDAwMDAwLDIuMTExMjE2KSx0cmFuc2xhdGUoLTAuMzIyODM3LC0wLjQyMTM1MCkiIGlkPSJyYWRpYWxHcmFkaWVudC0xIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzMwNThFNSIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMDAwMEMyIiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgICAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgICAgIDxwYXRoIGQ9Ik0wLDAgTDIwMDAsMCBMMjAwMCw1MTcuMzkwODEzIEMxOTQ3Ljk3NTM1LDUyNC45NjU3ODUgMTg5My4wMzM4Nyw1MjQuOTY1Nzg1IDE4MzUuMTc1NTYsNTE3LjM5MDgxMyBDMTcyMy40NDY4OCw1MDIuNzYyOTgzIDE2MjEuODMxMDYsNDQ2LjQwNjI4IDE0OTUsNDQ2LjQwNjI4IEMxMjU3LjE3NTc2LDQ0Ni40MDYyOCAxMTQyLjgwNjgxLDYxMC4yMzM4MSA5NjkuNzc3MzE5LDY0NC40ODgwMSBDNjg5LjM2NzU4OCw3MDAgNjE3LjE4Mzc1OSw1ODIuNzI5MDA3IDQwNSw1ODIuNzI5MDA3IEMyODQuNDYzMDA2LDU4Mi43MjkwMDcgMTQ5LjQ2MzAwNiw2MjEuODE5MzM4IDAsNzAwIEwwLDAgWiIgaWQ9InBhdGgtMiI+PC9wYXRoPgogICAgPC9kZWZzPgogICAgPGcgaWQ9IumhtemdoiIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9IkFydGJvYXJkLTIiPgogICAgICAgICAgICA8ZyBpZD0iUmVjdGFuZ2xlLTE0Ij4KICAgICAgICAgICAgICAgIDxtYXNrIGlkPSJtYXNrLTMiIGZpbGw9IndoaXRlIj4KICAgICAgICAgICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNwYXRoLTIiPjwvdXNlPgogICAgICAgICAgICAgICAgPC9tYXNrPgogICAgICAgICAgICAgICAgPHVzZSBpZD0iTWFzayIgZmlsbD0idXJsKCNyYWRpYWxHcmFkaWVudC0xKSIgZmlsbC1ydWxlPSJub256ZXJvIiB4bGluazpocmVmPSIjcGF0aC0yIj48L3VzZT4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik01LDcwNi45NjU3NTIgQzE2MC41ODE1MjUsNTg2LjEzNDEyMiAzNTkuNDIyOTgzLDUyNS43MTgzMDYgNjAxLjUyNDM3Miw1MjUuNzE4MzA2IEM4ODguMzAyMjQ4LDUyNS43MTgzMDYgOTQ1LjUyOTI3OSw2NjEuMTgxMDA0IDEzMDcuMDAzNiw2NDguODU5MTUzIEMxNDQ3LjczMTY0LDY0NC4wNjIwNDkgMTY3NC44ODMzLDUyNS43MTgzMDYgMTg0MS42MTY2NCw1MjUuNzE4MzA2IEMxOTE1LjA4ODE4LDUyNS43MTgzMDYgMTk2OS41NDkzLDUzNi4xNDE4NTUgMjAwNSw1NTYuOTg4OTUyIEwyMDA1LDc3MiBMNSw3NzIgTDUsNzA2Ljk2NTc1MiBaIiBmaWxsPSIjMzA1OEU1IiBmaWxsLXJ1bGU9Im5vbnplcm8iIG9wYWNpdHk9IjAuODAyOTU3NTg5IiBtYXNrPSJ1cmwoI21hc2stMykiPjwvcGF0aD4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+);
+				background-size: cover;
+			} */
+
+			body {
+				background-image: linear-gradient(117deg, #6B46E3 0%, #5264EE 50%, #55A0EB 100%);
+			}
+
+			header {
+				padding: 0 25px;
+			}
+
+			header .title {
+				float: left;
+			}
+
+			header .logo {
+				float: left;
+				padding: 13px 12px;
+			}
+
+			header .logo img {
+				width: 48px;
+				height: 48px;
+			}
+
+			header .title-text {
+				float: left;
+				line-height: 24px;
+				color: #fff;
+				font-size: 12px;
+				padding: 13px 10px;
+			}
+
+			header .random-right {
+				float: right;
+			}
+
+			header .random-right li {
+				width: 90px;
+				height: 74px;
+				color: #fff;
+				text-shadow: 0 0 1px currentColor;
+				position: relative;
+				z-index: 1;
+				font-size: 16px;
+				padding: 0 10px;
+				line-height: 74px;
+				cursor: pointer;
+				opacity: 0.8;
+				float: left;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+			header .random-right li.active:after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				z-index: 0;
+				width: 75%;
+				height: 2px;
+				transform: translateX(-50%);
+				background: linear-gradient(to right, #00B2BD, #2CEB85);
+			}
+
+			section {
+				width: 90%;
+				margin: 0 auto;
+				/* box-shadow: 0 0 5px #00B7FF; */
+			}
+
+			.rollcoll-content {}
+
+			.bcimg {
+				position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0;
+			}
+
+			.buttons {
+				position: relative;
+				z-index: 1;
+			}
+
+			.buttons div {
+				display: inline-block;
+				padding: 6px 12px;
+				margin-bottom: 0;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42857143;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				touch-action: manipulation;
+				cursor: pointer;
+				background: #6B46E3;
+				border: 1px solid transparent;
+				border-radius: 4px;
+				color: #fff;
+				opacity: 1;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+			.buttons div:active {
+				opacity: 1;
+				background: #5F35E8;
+			}
+
+			.buttons div.active {
+				opacity: 0.7;
+			}
+
+			#loading {
+				height: 100%;
+				width: 100%;
+				position: fixed;
+				left: 0;
+				top: 0;
+				background: #000;
+				opacity: 0.3;
+				display: none;
+			}
+
+			#atName {
+				height: 50px;
+				line-height: 50px;
+				width: 120px;
+				font-size: 24px;
+				position: fixed;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				box-shadow: 0 0 5px #6B46E3;
+				border-radius: 3px;
+				border: 1px solid #6B46E3;
+				color: #6B46E3;
+				text-shadow: 1px 5px 5px #F7970D;
+				background: rgba(100, 78, 230, 0.3);
+			}
+
+			#section>div {
+				display: none;
+			}
+
+			#section>.active {
+				display: block;
+			}
+			.name-input{
+				padding: 10px;
+				text-align: center;
+			}
+			.name-input input{
+				border-radius: 3px;
+				background: #fff;
+				height: 24px;
+				width: 125px;
+				position: relative;
+				z-index: 1;
+				box-shadow: 0 0 5px #6B46E3;
+				text-align: left;
+				padding: 5px 10px;
+				transition: all 0.5s;
+			}
+			.name-input input:focus{
+				box-shadow: 0 0 5px #fff;
+			}
+			.edit-content-names {
+				padding: 10px;
+				box-shadow: 0 0 5px #6B46E3;
+				border-radius: 3px;
+				border: 1px solid #6B46E3;
+				text-align: left;
+			}
+			
+			.edit-content-names span {
+				position: relative;
+				z-index: 1;
+				display: inline-block;
+				width: 60px;
+				padding: 5px;
+				margin-bottom: 0;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.42857143;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				touch-action: manipulation;
+				cursor: pointer;
+				background: #6B46E3;
+				border: 1px solid transparent;
+				border-radius: 4px;
+				color: #fff;
+				margin-bottom: 5px;
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<img class="bcimg" src="/images/book.png"></div>
+		<header class="clear">
+			<div class="title clear">
+				<div class="logo">
+					<img src="/images/book-logo.png" />
+				</div>
+				<div class="title-text">
+					<h3>第五小学</h3>
+					<h3>一四班</h3>
+				</div>
+			</div>
+			<ul class="random-right clear" id="nav">
+				<li class="active">首页</li>
+				<li>添加学生</li>
+			</ul>
+		</header>
+		<div class="blank"></div>
+
+		<section id="section">
+			<div class="rollcoll-content active">
+				<div class="buttons clear">
+					<div id="startBtn">开始</div>
+					<div id="stopBtn">停止</div>
+				</div>
+				<div id="atName">大家好</div>
+			</div>
+			<div class="edit-content">
+
+				<div class="buttons clear">
+					<div id="addname">添加</div>
+					<div id="deletename">删除</div>
+				</div>
+				<div class="name-input">
+					<input type="text" id="nameInput"/>
+				</div>
+				<div class="edit-content-names" id="namescontent">
+
+				</div>
+			</div>
+		</section>
+		<div id="loading"></div>
+		<script>
+			var loaddom = document.getElementById("loading");
+
+			function ajax(options) {
+				loaddom.style.display = 'block';
+				var xhr = new XMLHttpRequest();
+				xhr.open(options.method, options.url)
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4) {
+						if (xhr.status === 200) {
+							options && options.success(xhr.responseText)
+						}
+					}
+				}
+				xhr.onloadend = function() {
+					loaddom.style.display = 'none';
+				}
+				xhr.send()
+			}
+
+			function createRandom(num) {
+				return Math.floor(num * Math.random())
+			}
+
+			function startcall(dom, data, i) {
+				dom.innerHTML = data[i].name
+			}
+			function setList(dom,list){
+				var length = list.length;
+				var str = '';
+				for(var i=0;i<length;i++){
+					str += "<span>"+list[i]["name"]+"</span>"
+				}
+				dom.innerHTML = str
+			}
+			function some(list,name){
+				for(var i=0;i<list.length;i++){
+					if(list[i].name === name){
+						return name
+					}
+				}
+				return
+			}
+		</script>
+		<script>
+			var dataNames = [];
+			var status = 'pending';
+			var startBtn = document.getElementById("startBtn");
+			var stopBtn = document.getElementById("stopBtn");
+			var atName = document.getElementById("atName");
+			var namescontent = document.getElementById("namescontent");
+			var section = document.getElementById("section");
+			var tabList = section.children;
+			var timer = null;
+			var length = 0;
+			var addname = document.getElementById('addname');
+			var deletename = document.getElementById('deletename');
+			var nameInput = document.getElementById('nameInput');
+			ajax({
+				method: 'GET',
+				url: '/queryRandomName',
+				success: function(res) {
+					dataNames = JSON.parse(res)
+					length = dataNames.length
+					setList(namescontent,dataNames)
+				},
+				err: function(err) {
+					alert(err)
+				}
+			})
+			startBtn.onclick = function() {
+				if (status === 'pending') {
+					clearInterval(timer)
+					status = 'starting'
+					this.classList.add('active')
+					timer = setInterval(function() {
+						var num = createRandom(length);
+						startcall(atName, dataNames, num)
+					}, 90)
+				}
+			}
+			stopBtn.onclick = function() {
+				clearInterval(timer)
+				if (status === 'starting') {
+					status = 'pending'
+					startBtn.classList.remove('active')
+				}
+			}
+			addname.onclick = function(){
+				if(!nameInput.value.replace(/\s*/g,"")){
+					alert("请输入姓名")
+					return;
+				}
+				if(some(dataNames,nameInput.value)){
+					alert("姓名->"+nameInput.value+"<-重复")
+					nameInput.value = ''
+					return;
+				}
+				
+				ajax({
+					method: 'GET',
+					url: '/addRandomName?name='+nameInput.value,
+					success: function(res) {
+						res = JSON.parse(res)
+						if(res.status === 1){
+							dataNames.push({
+								name:nameInput.value
+							})
+							length = dataNames.length
+							setList(namescontent,dataNames)
+							nameInput.value = ''
+						}
+					},
+					err: function(err) {
+						alert(err)
+					}
+				})
+				
+			}
+			deletename.onclick = function(){
+				if(!nameInput.value.replace(/\s*/g,"")){
+					alert("请输入将要移除的姓名")
+					return;
+				}
+				ajax({
+					method: 'GET',
+					url: '/deleteRandomName?name='+nameInput.value,
+					success: function(res) {
+						res = JSON.parse(res)
+						if(res.status === 1){
+							dataNames = res.data
+							length = dataNames.length
+							setList(namescontent,dataNames)
+							nameInput.value = ''
+						}
+					},
+					err: function(err) {
+						alert(err)
+					}
+				})
+			}
+			var nav = document.getElementById("nav");
+			var list = nav.getElementsByTagName("li");
+			var atName = document.getElementById("atName");
+
+			function removeClass(list) {
+				for (var i = 0; i < list.length; i++) {
+					list[i].classList.remove('active')
+				}
+			}
+			for (var i = 0; i < list.length; i++) {
+				list[i].onclick = function(e) {
+					if(status !== 'pending'){
+						return
+					}
+					removeClass(list);
+					removeClass(tabList);
+					var target = e.target;
+					var index = [].indexOf.call(list,target);
+					tabList[index].classList.add('active');
+					target.classList.add('active');
+				}
+			}
+		</script>
+	</body>
+</html>
