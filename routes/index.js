@@ -15,8 +15,14 @@ router.get('/queryRandomName', async (ctx, next) => {
 
 router.get('/addRandomName', async (ctx, next) => {
 	var names = require('./../data/random/names.json')
-	console.log(typeof names)
 	const {name} = ctx.query;
+	if(!name || !name.replace(/\s*/g,"")){
+		ctx.body = {
+		  status: 0,
+			data:names
+		}
+		return
+	}
 	names.push({
 		name:name
 	})
