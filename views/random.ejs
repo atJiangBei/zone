@@ -291,10 +291,10 @@
 		<div id="loading"></div>
 		<script>
 			window.onload = function(){
-			// var password = prompt("请输入密码");
-			// if(password !== '20132014'){
-			// 	return
-			// }
+			var password = prompt("请输入密码");
+			if(password !== '20132014'){
+				return
+			}
 			var loaddom = document.getElementById("loading");
 
 			function ajax(options) {
