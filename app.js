@@ -9,6 +9,7 @@ const session = require('koa-session');
 const index = require('./routes/index')
 const users = require('./routes/users')
 const api = require('./routes/api')
+const router = require('./routes/router')
 // error handler
 onerror(app)
 app.keys = ['some secret hurr'];
@@ -49,6 +50,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(api.routes(), api.allowedMethods())
+router(app)
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

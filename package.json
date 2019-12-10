@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "ejs": "^2.7.2",
+    "mongoose-paginate": "^5.0.3",
     "nodemon": "^1.8.1"
   }
 }
