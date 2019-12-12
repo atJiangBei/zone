@@ -1,5 +1,9 @@
 const router = require('koa-router')()
-const {queryRecommender,deleteRecommender,addRecommender} = require("./../../controller/IntimateAdmin/recommender.js")
+const {
+	queryRecommender,
+	deleteRecommender,
+	addRecommender
+} = require("./../../controller/IntimateAdmin/recommender.js")
 //router.prefix('/users')
 
 router.get('/IntimateAdmin/add/recommender', addRecommender)

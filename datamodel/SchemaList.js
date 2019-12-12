@@ -28,7 +28,7 @@ const RecommenderSchema = new Schema({
 		default: 0
 	},
 	key: String,
-	CreatedDate: String//账户创建时间字符戳
+	CreatedDate: String //账户创建时间字符戳
 });
 
 RecommenderSchema.plugin(mongoosePaginate)
@@ -39,12 +39,23 @@ const CommoditySchema = new Schema({
 	price: Number,
 	sellingPoint: String,
 	details: String,
-	key: String,//
-	CreatedDate: String//商品添加时间
+	key: String, //
+	CreatedDate: String //商品添加时间
 });
 
 CommoditySchema.plugin(mongoosePaginate)
 
+const UploadImgSchema = new Schema({
+	name: String,
+	url: String,
+	details: String,
+	key: String, //
+	CreatedDate: String //商品添加时间
+})
+
+UploadImgSchema.plugin(mongoosePaginate)
+
 exports.userSchema = userSchema;
 exports.RecommenderSchema = RecommenderSchema;
 exports.CommoditySchema = CommoditySchema
+exports.UploadImgSchema = UploadImgSchema

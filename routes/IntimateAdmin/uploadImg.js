@@ -1,9 +1,12 @@
 const router = require('koa-router')()
-const {uploadImg,deleteImg} = require("./../../controller/IntimateAdmin/uploadImg.js")
+const {
+	uploadImg,
+	deleteImg
+} = require("./../../controller/IntimateAdmin/uploadImg.js")
 //router.prefix('/users')
 
-router.get('/IntimateAdmin/upload/img', uploadImg)
-
+router.post('/IntimateAdmin/upload/img', uploadImg)
+router.get('/IntimateAdmin/query/img', deleteImg)
 router.get('/IntimateAdmin/delete/img', deleteImg)
 
 

@@ -52,19 +52,17 @@ exports.addCommodity = async (ctx, next) => {
 }
 
 exports.queryCommodity = async (ctx, next) => {
-
-	const {
-		name,
-		query = {}
-	} = ctx.query
-
+	const query = removeUndefined(ctx.query)
+	const pageQuery = JSON.parse(query.query)
+	delete query.query
 	try {
 		const data = await CommoditySchema.paginate({
-			...removeUndefined({
-				name
-			})
-		}, {
 			...query
+		}, {
+			...pageQuery,
+			sort: {
+				date: 1
+			}
 		});
 		ctx.body = {
 			state: 1,
@@ -81,8 +79,31 @@ exports.queryCommodity = async (ctx, next) => {
 
 
 exports.deleteCommodity = async (ctx, next) => {
-	ctx.body = {
-		state: 1,
-		data: "删除商品"
+	try {
+		const {
+			key
+		} = ctx.query
+		const result = await CommoditySchema.deleteOne({
+			key
+		})
+		const {
+			ok
+		} = result
+		if (ok === 1) {
+			ctx.body = {
+				state: 1,
+				message: '删除成功'
+			}
+		} else {
+			ctx.body = {
+				state: 0,
+				message: '未知错误'
+			}
+		}
+	} catch (e) {
+		ctx.body = {
+			state: 0,
+			message: e.toString()
+		}
 	}
 }
