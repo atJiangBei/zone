@@ -15,7 +15,6 @@ exports.addCommodity = async (ctx, next) => {
 		sellingPoint,
 		details
 	} = ctx.request.body;
-	console.log(name)
 	try {
 		const data = await CommoditySchema.find({
 			name

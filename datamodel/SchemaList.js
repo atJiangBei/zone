@@ -48,9 +48,8 @@ CommoditySchema.plugin(mongoosePaginate)
 const UploadImgSchema = new Schema({
 	name: String,
 	url: String,
-	details: String,
-	key: String, //
-	CreatedDate: String //商品添加时间
+	key: String, 
+	CreatedDate: String 
 })
 
 UploadImgSchema.plugin(mongoosePaginate)
