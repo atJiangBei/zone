@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const {
 	UploadImgSchema
 } = require("./../../datamodel");
@@ -6,15 +8,22 @@ const {
 	removeUndefined
 } = require('./../../common')
 const isLinux = process.platform === 'linux'
-
+let prefix = 'http://127.0.0.1/uploadimgs/';
+if (isLinux) {
+	prefix = 'http://index.jiangbei.online/imgs/';
+}
+let pathUrl = function(){
+	if(isLinux){
+		return path.join(__dirname,'../../../../assets/imgs/')
+	}else{
+		return path.join(__dirname,'../../public/uploadimgs/')
+	}
+}
 exports.uploadImg = async (ctx, next) => {
 	if (ctx.req && ctx.req.file) {
-		try{
+		try {
 			const name = ctx.req.file.filename
-			let url = 'http://127.0.0.1/uploadimgs/' + name;
-			if (isLinux) {
-				url = 'http://index.jiangbei.online/imgs/' + name;
-			}
+			const url = prefix + name;
 			await new UploadImgSchema({
 				name,
 				url,
@@ -28,13 +37,13 @@ exports.uploadImg = async (ctx, next) => {
 				},
 				message: '上传图片!'
 			}
-		}catch(e){
+		} catch (e) {
 			ctx.body = {
 				state: 0,
 				message: e.toString()
 			}
 		}
-		
+
 	} else {
 		ctx.body = {
 			state: 0,
@@ -61,7 +70,7 @@ exports.queryImg = async (ctx, next) => {
 			state: 1,
 			data
 		}
-	
+
 	} catch (e) {
 		ctx.body = {
 			state: 0,
@@ -71,10 +80,30 @@ exports.queryImg = async (ctx, next) => {
 }
 
 exports.deleteImg = async (ctx, next) => {
-	ctx.body = {
-		state: 1,
-		data: "删除图片"
+	const {
+		key,
+		name
+	} = ctx.query
+	const link = pathUrl() + name
+	try{
+		const result = await UploadImgSchema.deleteOne({
+			key
+		})
+		const {
+			ok
+		} = result
+		fs.unlinkSync(link)
+		ctx.body = {
+			state: 1,
+			message: '删除成功'
+		}
+	}catch(e){
+		ctx.body = {
+			state: 0,
+			message: e.toString()
+		}
 	}
+	
 }
 
 //root@47.244.40.130:22:/etc/nginx/nginx.conf
