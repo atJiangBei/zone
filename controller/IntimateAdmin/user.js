@@ -1,6 +1,6 @@
 const {
 	User
-} = require("./../datamodel");
+} = require("./../../datamodel");
 
 
 
@@ -48,7 +48,8 @@ exports.register = async (ctx, next) => {
 	const {
 		name,
 		SecretProtection,
-		password
+		password,
+		headPortrait
 	} = ctx.request.body;
 
 	const data = await User.find({
@@ -65,7 +66,6 @@ exports.register = async (ctx, next) => {
 	const dataProtection = await User.find({
 		SecretProtection
 	});
-	console.log(dataProtection)
 	if (dataProtection.length > 0) {
 		ctx.body = {
 			state: 2,
@@ -76,7 +76,8 @@ exports.register = async (ctx, next) => {
 	const user = new User({
 		name,
 		SecretProtection,
-		password
+		password,
+		headPortrait
 	});
 	try {
 		await user.save()
@@ -102,14 +103,14 @@ exports.retrievepassword = async (ctx, next) => {
 
 exports.loginStatus = async (ctx, next) => {
 	const session = ctx.session;
-	let data = null;
 	if (session.name) {
-		data = await User.findOne({
+		let data = await User.findOne({
 			name: session.name
 		}, {
 			name: 1,
 			_id: 1,
-			CreatedDate: 1
+			CreatedDate: 1,
+			headPortrait:1
 		});
 		ctx.body = {
 			state: 1,

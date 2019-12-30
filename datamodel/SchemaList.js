@@ -8,6 +8,7 @@ const {
 const userSchema = new Schema({
 	name: String,
 	password: String,
+	headPortrait:String,//头像
 	SecretProtection: String, //密保问题
 	PersonalizedSignature: String, //个性签名
 	PersonalStatement: String, //个人说明
