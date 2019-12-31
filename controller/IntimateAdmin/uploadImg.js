@@ -10,7 +10,7 @@ const {
 const isLinux = process.platform === 'linux'
 let prefix = 'http://127.0.0.1/uploadimgs/';
 if (isLinux) {
-	prefix = 'http://index.jiangbei.online/imgs/';
+	prefix = 'http://static.jiangbei.online/imgs/';
 }
 let pathUrl = function(){
 	if(isLinux){
