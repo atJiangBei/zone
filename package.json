@@ -27,6 +27,7 @@
     "ejs": "^2.7.2",
     "koa-multer": "^1.0.2",
     "mongoose-paginate": "^5.0.3",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "sha1": "^1.1.1"
   }
 }

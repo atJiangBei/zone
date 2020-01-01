@@ -8,7 +8,7 @@ const {
 	removeUndefined
 } = require('./../../common')
 const isLinux = process.platform === 'linux'
-let prefix = 'http://127.0.0.1/uploadimgs/';
+let prefix = 'http://127.0.0.1:3000/uploadimgs/';
 if (isLinux) {
 	prefix = 'http://static.jiangbei.online/imgs/';
 }
