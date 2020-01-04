@@ -55,7 +55,25 @@ const UploadImgSchema = new Schema({
 
 UploadImgSchema.plugin(mongoosePaginate)
 
+const AppointmentSchema = new Schema({
+	//预约订单记录
+	name: String,//预约用户名
+	openid: String,//预约用户openid
+	recommender:String,//推荐人
+	key: String, //订单号
+	commodity:{},//商品信息
+	details:{},//订单详情
+	CreatedDate: String //订单生成时间
+})
+
+AppointmentSchema.plugin(mongoosePaginate)
+
 exports.userSchema = userSchema;
+// 推荐人
 exports.RecommenderSchema = RecommenderSchema;
+//商品
 exports.CommoditySchema = CommoditySchema
+// 图片上传
 exports.UploadImgSchema = UploadImgSchema
+//预约 订单
+exports.AppointmentSchema = AppointmentSchema

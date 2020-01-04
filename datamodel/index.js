@@ -14,7 +14,8 @@ const {
 	userSchema,
 	RecommenderSchema,
 	CommoditySchema,
-	UploadImgSchema
+	UploadImgSchema,
+	AppointmentSchema
 } = require("./SchemaList");
 
 
@@ -23,3 +24,4 @@ exports.User = mongoose.model('User', userSchema);
 exports.RecommenderSchema = mongoose.model('Recommender', RecommenderSchema);
 exports.CommoditySchema = mongoose.model('Commodity', CommoditySchema);
 exports.UploadImgSchema = mongoose.model('UploadImg', UploadImgSchema);
+exports.AppointmentSchema = mongoose.model('Appointment', AppointmentSchema);
