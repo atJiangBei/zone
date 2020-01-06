@@ -39,6 +39,11 @@ const CommoditySchema = new Schema({
 	banner: String,
 	price: Number,
 	sellingPoint: String,
+	type:String,
+	SalesVolume:{
+		type:String,
+		default:0
+	},
 	details: String,
 	key: String, //
 	CreatedDate: String //商品添加时间
@@ -58,6 +63,7 @@ UploadImgSchema.plugin(mongoosePaginate)
 const AppointmentSchema = new Schema({
 	//预约订单记录
 	name: String,//预约用户名
+	user_name:String,//预约用户微信名
 	openid: String,//预约用户openid
 	recommender:String,//推荐人
 	key: String, //订单号

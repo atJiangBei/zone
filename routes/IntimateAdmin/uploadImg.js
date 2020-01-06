@@ -2,6 +2,9 @@ const router = require('koa-router')()
 const multer = require('koa-multer');
 const path = require('path')
 const isLinux = process.platform === 'linux'
+const {
+	createRandomStr,
+} = require('./../../common')
 let pathUrl = function(isLinux){
 	if(isLinux){
 		return path.join(__dirname,'../../../../assets/imgs')
@@ -22,7 +25,8 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         var fileFormat = (file.originalname).split(".");
-        cb(null,fileFormat[0] + Date.now() + "." + fileFormat[fileFormat.length - 1]);
+        cb(null,fileFormat[0] + createRandomStr() + "." + fileFormat[fileFormat.length - 1]);
+		//cb(null,file.originalname);
     }
 })
 const upload = multer({ storage });

@@ -3,7 +3,7 @@ const {
 } = require("./../../datamodel");
 const {
 	createRandomStr,
-	removeUndefined
+	analysis
 } = require('./../../common')
 exports.addRecommender = async (ctx, next) => {
 	const {
@@ -13,7 +13,6 @@ exports.addRecommender = async (ctx, next) => {
 		const data = await RecommenderSchema.find({
 			name
 		})
-		console.log(data)
 		if (data.length) {
 			ctx.body = {
 				state: 3,
@@ -41,14 +40,18 @@ exports.addRecommender = async (ctx, next) => {
 }
 
 exports.queryRecommender = async (ctx, next) => {
-	let query = ctx.query
-	console.log(query)
-	query = removeUndefined(query)
-	const pageQuery = JSON.parse(query.query)
-	delete query.query
+
+	const {
+		queryPaging,
+		queryParams
+	} = analysis(ctx.query)
 	try {
-		const data = await RecommenderSchema.paginate({ ...query
-		}, { ...pageQuery
+		const data = await RecommenderSchema.paginate({ ...queryParams
+		}, { ...queryPaging,
+			sort: {
+				CreatedDate: -1
+			}
+
 		});
 		ctx.body = {
 			state: 1,

@@ -24,16 +24,19 @@ exports.uploadImg = async (ctx, next) => {
 		try {
 			const name = ctx.req.file.filename
 			const url = prefix + name;
+			const key = createRandomStr()
 			await new UploadImgSchema({
 				name,
 				url,
-				key: createRandomStr(),
+				key: key,
 				CreatedDate: Date.now() + ''
 			}).save()
 			ctx.body = {
 				state: 1,
 				data: {
-					url: url
+					url: url,
+					name:name,
+					key:key
 				},
 				message: '上传图片!'
 			}
@@ -63,7 +66,7 @@ exports.queryImg = async (ctx, next) => {
 		}, {
 			...pageQuery,
 			sort: {
-				date: 1
+				CreatedDate: -1
 			}
 		});
 		ctx.body = {

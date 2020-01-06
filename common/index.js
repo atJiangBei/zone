@@ -18,3 +18,19 @@ exports.removeUndefined = function(obj) {
 	}
 	return obj
 }
+
+exports.analysis = function(params){
+	const queryPaging = params.query?JSON.parse(params.query):{page:1};
+	const queryParams = {};
+	for (let key in params) {
+		if (key !== 'query') {
+			if(params[key]){
+				queryParams[key] = params[key]
+			}
+		}
+	}
+	return {
+		queryPaging,
+		queryParams
+	}
+}

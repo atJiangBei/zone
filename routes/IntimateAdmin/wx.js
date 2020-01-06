@@ -139,7 +139,6 @@ router.get('/IntimateAdmin/sendMessage', async (ctx, next) => {
 		}
 
 	} catch (e) {
-		console.log(888888888888)
 		ctx.body = {
 			state: 0,
 			message: e.toString()

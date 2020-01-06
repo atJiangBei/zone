@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const DB_URL = 'mongodb://127.0.0.1:27017/myself';
 const db = mongoose.connect(DB_URL, {
-	useNewUrlParser: true
+	useNewUrlParser: true,
+	useUnifiedTopology: true
 }, (err) => {
 	if (err) {
 		console.log("数据库连接失败")

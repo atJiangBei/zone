@@ -1,7 +1,7 @@
 const {
 	User
 } = require("./../../datamodel");
-
+const code = "wszxxsjhjzyq"
 
 
 exports.signin = async (ctx, next) => {
@@ -47,15 +47,19 @@ exports.signout = async (ctx, next) => {
 exports.register = async (ctx, next) => {
 	const {
 		name,
-		SecretProtection,
+		RegistrationCode,
 		password,
-		headPortrait
 	} = ctx.request.body;
-
+	if (RegistrationCode !== code) {
+		ctx.body = {
+			state: 2,
+			message: "注册码错误"
+		}
+		return;
+	}
 	const data = await User.find({
 		name
 	});
-	console.log(data)
 	if (data.length > 0) {
 		ctx.body = {
 			state: 2,
@@ -63,21 +67,11 @@ exports.register = async (ctx, next) => {
 		}
 		return;
 	}
-	const dataProtection = await User.find({
-		SecretProtection
-	});
-	if (dataProtection.length > 0) {
-		ctx.body = {
-			state: 2,
-			message: "密保重复，请重新输入"
-		}
-		return;
-	}
+
+
 	const user = new User({
 		name,
-		SecretProtection,
 		password,
-		headPortrait
 	});
 	try {
 		await user.save()

@@ -3,7 +3,7 @@ const {
 } = require("./../../datamodel");
 const {
 	createRandomStr,
-	removeUndefined
+	analysis
 } = require('./../../common')
 
 
@@ -12,6 +12,7 @@ exports.addCommodity = async (ctx, next) => {
 		name,
 		banner,
 		price,
+		type,
 		sellingPoint,
 		details
 	} = ctx.request.body;
@@ -24,6 +25,7 @@ exports.addCommodity = async (ctx, next) => {
 				name,
 				banner,
 				price,
+				type,
 				sellingPoint,
 				details,
 				key: createRandomStr(),
@@ -51,16 +53,18 @@ exports.addCommodity = async (ctx, next) => {
 }
 
 exports.queryCommodity = async (ctx, next) => {
-	const query = removeUndefined(ctx.query)
-	const pageQuery = JSON.parse(query.query)
-	delete query.query
+	const {
+		queryPaging,
+		queryParams
+	} = analysis(ctx.query)
+	console.log(queryParams)
 	try {
 		const data = await CommoditySchema.paginate({
-			...query
+			...queryParams
 		}, {
-			...pageQuery,
+			...queryPaging,
 			sort: {
-				date: 1
+				CreatedDate: -1
 			}
 		});
 		ctx.body = {
