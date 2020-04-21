@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'zone',
-    script: './bin/www',
+    script: 'bin/www',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     args: 'one two',
@@ -31,7 +31,7 @@ module.exports = {
       host : '212.83.163.1',
       ref  : 'origin/master',
       repo : 'git@github.com:repo.git',
-      path : '/root/test/source/bin/www',
+      path : '/root/test/source',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     }
   }

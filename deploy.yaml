@@ -1,6 +1,6 @@
 # deploy.yaml
 apps:
-  -script: start    # 入口文件
+  -script: bin/www    # 入口文件
   name: 'tem-ceshi'       # 程序名称
   env:           # 环境变量
    COMMON_VARIABLE: true
